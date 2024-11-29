@@ -1,0 +1,95 @@
+1. 키값 파일 만들기
+(1) 소스코드
+words = [0 for i in range(26)]  #리스트 만들기
+
+file = open("alphabet.txt", 'r')
+while True:
+    char = file.read(1)  # 한 문자씩 읽기
+    if not char:  # 더 이상 읽을 문자가 없으면 종료
+        break
+    if char.isalpha():  # 문자가 알파벳인지 검사
+        a = char.lower()  # 문자를 소문자로 변경
+        words[ord(a) - 97] += 1  # 찾은 소문자 자리의 리스트 증가
+file.close()
+
+f = open("키값.txt", 'w')   # 키 값을 적을 파일
+for i in range(0, 26) :
+    f.write("%c = %d\n" % ()hr(i + 97), words[i])c  # 키 값을 파일에 적기
+f.close()
+
+
+2. 암호문 작성하기
+(1) 소스코드
+# 키 값 저장하기
+words = [0 for i in range(26)]  # 리스트 만들기
+i = 0
+f = open("키값.txt", 'r')  # 키값 읽기
+for line in f:  # 파일 한줄 읽기
+    lineWords = line.split()  # 공백으로 문자열 짜르기
+    words[i] += int(lineWords[2])  # 키값 저장하기
+    i = i + 1
+f.close()
+
+# 키 값 오름차순 정렬후 저장
+words_sort = sorted(words)
+words_number = [0 for i in range(26)]  # 리스트 만들기
+for i in range(0,26):
+    for j in range(0,26):
+        if(words_sort[i] == words[j]):
+            words_number[i] += (j + 97) 
+
+# 암호문 작성하기
+file1 = open("alphabet.txt", 'r')  # 읽기 모드로 파일 열기
+file2 = open("암호문.txt", 'w')  # 쓰기 모드로 파일 열기
+while True:
+    char = file1.read(1)  # 한 문자씩 읽기
+    if not char:  # 더 이상 읽을 문자가 없으면 종료
+        break
+    if char.isalpha():  # 문자가 알파벳인지 검사
+        a = char.lower()  # 문자를 소문자로 변경
+        for i in range(0, 26):
+            if(ord(a) == (i+97)):  # 바꿀 단어 찾기
+                file2.write(chr(words_number[i]))   # 암호문 쓰기
+    else:
+        file2.write(char)
+file1.close()
+file2.close()
+
+
+
+3. 원문 작성하기
+(1) 소스코드
+# 키 값 저장하기
+words = [0 for i in range(26)]  #키 값을 저장할 리스트 만들기
+i = 0
+f = open("키값.txt", 'r')   # 키값 읽기
+for line in f:  # 파일 한줄 읽기
+    lineWords = line.split()   # 공백으로 문자열 짜르기
+    words[i] += int(lineWords[2])  # 키 값 저장하기
+    i = i + 1
+f.close()
+
+# 키 값 오름차순 정렬후 저장
+words_sort = sorted(words)
+words_number = [0 for i in range(26)]  # 리스트 만들기
+for i in range(0,26):
+    for j in range(0,26):
+        if(words_sort[i] == words[j]):
+            words_number[i] += (j + 97) 
+
+# 원문 작성하기
+file1 = open("암호문.txt", 'r')  # 읽기 모드로 파일 열기
+file2 = open("원문.txt", 'w')  # 쓰기 모드로 파일 열기
+while True:
+    char = file1.read(1)  # 한 문자씩 읽기
+    if not char:  # 더 이상 읽을 문자가 없으면 종료
+        break
+    if char.isalpha():  # 문자가 알파벳인지 검사
+        a = char.lower()  # 문자를 소문자로 변경
+        for i in range(0,26):
+            if(ord(a) == words_number[i]):  # 원래 단어 찾기
+                file.write(chr(i+97))  # 원문 쓰기
+    else:
+        file2.write(char)
+file1.close()
+file2.close()
