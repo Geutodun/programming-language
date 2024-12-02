@@ -1,0 +1,13 @@
+open cv 다운
+python -m pip install opencv-python
+
+
+matplotlib 다운
+pip install matplotlib
+
+
+pyautogui 다운
+pip install pyautogui
+
+라이브러리 목록
+pip list
