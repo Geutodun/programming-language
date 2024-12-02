@@ -1,0 +1,510 @@
+import cv2
+import random
+import numpy as np
+import matplotlib.pyplot as plt
+import pyautogui
+
+#전환수 찾기 알고리즘
+z = 0
+v = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+
+while z != 1:
+    b = random.sample(v, 9)
+    x = 0
+    y = 0
+    for i in range(9):
+        if b[i] == 0:
+            x = i
+    if x <= 2:
+        y = 1
+    elif x <= 5:
+        y = 2
+    else:
+        y = 3
+    count = 0
+    for i in range(len(b)):
+        for j in range(i + 1, len(b)):
+            if b[i] > b[j] and b[i] != 0 and b[j] != 0:
+                count += 1   
+    if (y == 1 or y ==3) and (count % 2) == 1:       
+        z = 1
+    elif y == 2 and (count % 2) == 0:
+        z = 1
+    for i in range(9):
+        v[i] = b[i]
+
+imgList1 = []
+for i in range(9):
+    if v[i] == 0: 
+        imgList1.append('puzzle/num_0.png')
+    elif v[i] == 1:
+        imgList1.append('puzzle/num_1.png')
+    elif v[i] == 2:
+        imgList1.append('puzzle/num_2.png')
+    elif v[i] == 3:
+        imgList1.append('puzzle/num_3.png')
+    elif v[i] == 4:
+        imgList1.append('puzzle/num_4.png')
+    elif v[i] == 5:
+        imgList1.append('puzzle/num_5.png')
+    elif v[i] == 6:
+        imgList1.append('puzzle/num_6.png')
+    elif v[i] == 7:
+        imgList1.append('puzzle/num_7.png')
+    elif v[i] == 8:
+        imgList1.append('puzzle/num_8.png')
+
+
+
+#이미지 처리
+#imgList11 = ['puzzle/num_1.png', 'puzzle/num_2.png', 'puzzle/num_3.png']
+#imgList12 = ['puzzle/num_4.png', 'puzzle/num_5.png', 'puzzle/num_6.png']
+#imgList13 = ['puzzle/num_7.png', 'puzzle/num_8.png', 'puzzle/num_0.png']
+#imgList1 = imgList11 + imgList12 + imgList13
+#imgList2 = random.sample(imgList1, 9)
+
+
+fig, axes = plt.subplots(3, 3, figsize=(5, 5))
+img1 = cv2.imread(imgList1[0])
+img2 = cv2.imread(imgList1[1])
+img3 = cv2.imread(imgList1[2])
+img4 = cv2.imread(imgList1[3])
+img5 = cv2.imread(imgList1[4])
+img6 = cv2.imread(imgList1[5])
+img7 = cv2.imread(imgList1[6])
+img8 = cv2.imread(imgList1[7])
+img9 = cv2.imread(imgList1[8])
+img0 = cv2.imread('puzzle/num_0.png')
+imgList3 = [img1, img2, img3, img4, img5, img6, img7, img8, img9]
+
+
+#0이미지가 어디칸에 있는지 구하기
+a = 0
+hists = []
+for img in imgList3:
+    # BGR 이미지를 HSV 이미지로 변환
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    # 히스토그램 연산(파라미터 순서 : 이미지, 채널, Mask, 크기, 범위)
+    hist = cv2.calcHist([hsv], [0, 1], None, [180, 256], [0, 180, 0, 256])
+    # 정규화(파라미터 순서 : 정규화 전 데이터, 정규화 후 데이터, 시작 범위, 끝 범위, 정규화 알고리즘)
+    cv2.normalize(hist, hist, 0, 1, cv2.NORM_MINMAX)
+    # hists 리스트에 저장
+    hists.append(hist)
+
+
+hsv1 = cv2.cvtColor(img0, cv2.COLOR_BGR2HSV)
+# 히스토그램 연산(파라미터 순서 : 이미지, 채널, Mask, 크기, 범위)
+hist1 = cv2.calcHist([hsv1], [0, 1], None, [180, 256], [0, 180, 0, 256])
+# 정규화(파라미터 순서 : 정규화 전 데이터, 정규화 후 데이터, 시작 범위, 끝 범위, 정규화 알고리즘)
+cv2.normalize(hist1, hist1, 0, 1, cv2.NORM_MINMAX)
+g = hist1
+
+
+for i, histogram in enumerate(hists):
+        ret = cv2.compareHist(g, histogram, 3) 
+        if int(ret*10) == 0:
+            a = int(i) + 1
+
+
+# 이미지 출력
+plt.subplot(3, 3, 1)
+plt.gca().axes.xaxis.set_visible(False)
+plt.gca().axes.yaxis.set_visible(False)
+plt.imshow(img1)
+
+plt.subplot(3, 3, 2)
+plt.gca().axes.xaxis.set_visible(False)
+plt.gca().axes.yaxis.set_visible(False)
+plt.imshow(img2)
+
+plt.subplot(3, 3, 3)
+plt.gca().axes.xaxis.set_visible(False)
+plt.gca().axes.yaxis.set_visible(False)
+plt.imshow(img3)
+
+plt.subplot(3, 3, 4)
+plt.gca().axes.xaxis.set_visible(False)
+plt.gca().axes.yaxis.set_visible(False)
+plt.imshow(img4)
+
+plt.subplot(3, 3, 5)
+plt.gca().axes.xaxis.set_visible(False)
+plt.gca().axes.yaxis.set_visible(False)
+plt.imshow(img5)
+
+plt.subplot(3, 3, 6)
+plt.gca().axes.xaxis.set_visible(False)
+plt.gca().axes.yaxis.set_visible(False)
+plt.imshow(img6)
+
+plt.subplot(3, 3, 7)
+plt.gca().axes.xaxis.set_visible(False)
+plt.gca().axes.yaxis.set_visible(False)
+plt.imshow(img7)
+
+plt.subplot(3, 3, 8)
+plt.gca().axes.xaxis.set_visible(False)
+plt.gca().axes.yaxis.set_visible(False)
+plt.imshow(img8)
+
+plt.subplot(3, 3, 9)
+plt.gca().axes.xaxis.set_visible(False)
+plt.gca().axes.yaxis.set_visible(False)
+plt.imshow(img9)
+
+
+def add_point(event):
+    global a
+    #if event.inaxes != ax:
+       #return
+    if event.button ==1:
+        fore = pyautogui.getActiveWindow()
+        pos = pyautogui.position()
+        x = pos.x - fore.left
+        y = pos.y - fore.top
+        print("클릭 : ", x, ", ", y)
+
+        if (x >= 70 and x <= 190) and (y >= 90 and y <= 210):
+            b = 1
+            if (b + 1) == a:
+                c = imgList3[0]
+                imgList3[0] = imgList3[1]
+                imgList3[1] = c
+                plt.subplot(3, 3, 1)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[0])
+                plt.subplot(3, 3, 2)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[1])
+                a = 1
+            elif (b + 3) == a:
+                c = imgList3[0]
+                imgList3[0] = imgList3[3]
+                imgList3[3] = c
+                plt.subplot(3, 3, 1)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[0])
+                plt.subplot(3, 3, 4)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[3])
+                a = 1
+            
+        if (x >= 205 and x <= 325) and (y >= 90 and y <= 210):
+            b = 2
+            if (b + 1) == a:
+                c = imgList3[1]
+                imgList3[1] = imgList3[2]
+                imgList3[2] = c
+                plt.subplot(3, 3, 2)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[1])
+                plt.subplot(3, 3, 3)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[2])
+                a = 2
+            elif (b - 1) == a:
+                c = imgList3[1]
+                imgList3[1] = imgList3[0]
+                imgList3[0] = c
+                plt.subplot(3, 3, 2)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[1])
+                plt.subplot(3, 3, 1)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[0])
+                a = 2
+            elif (b + 3) == a:
+                c = imgList3[1]
+                imgList3[1] = imgList3[4]
+                imgList3[4] = c
+                plt.subplot(3, 3, 2)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[1])
+                plt.subplot(3, 3, 5)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[4])
+                a = 2
+
+        if (x >= 335 and x <= 450) and (y >= 90 and y <= 210):
+            b = 3
+            if (b - 1) == a:
+                c = imgList3[2]
+                imgList3[2] = imgList3[1]
+                imgList3[1] = c
+                plt.subplot(3, 3, 3)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[2])
+                plt.subplot(3, 3, 2)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[1])
+                a = 3
+            elif (b + 3) == a:
+                c = imgList3[2]
+                imgList3[2] = imgList3[5]
+                imgList3[5] = c
+                plt.subplot(3, 3, 3)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[2])
+                plt.subplot(3, 3, 6)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[5])
+                a = 3
+
+        if (x >= 70 and x <= 190) and (y >= 225 and y <= 340):
+            b = 4
+            if (b + 1) == a:
+                c = imgList3[3]
+                imgList3[3] = imgList3[4]
+                imgList3[4] = c
+                plt.subplot(3, 3, 4)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[3])
+                plt.subplot(3, 3, 5)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[4])
+                a = 4
+            elif (b + 3) == a:
+                c = imgList3[3]
+                imgList3[3] = imgList3[6]
+                imgList3[6] = c
+                plt.subplot(3, 3, 4)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[3])
+                plt.subplot(3, 3, 7)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[6])
+                a = 4
+            elif (b - 3) == a:
+                c = imgList3[3]
+                imgList3[3] = imgList3[0]
+                imgList3[0] = c
+                plt.subplot(3, 3, 4)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[3])
+                plt.subplot(3, 3, 1)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[0])
+                a = 4
+
+        if (x >= 205 and x <= 325) and (y >= 225 and y <= 340):
+            b = 5
+            if (b + 1) == a:
+                c = imgList3[4]
+                imgList3[4] = imgList3[5]
+                imgList3[5] = c
+                plt.subplot(3, 3, 5)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[4])
+                plt.subplot(3, 3, 6)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[5])
+                a = 5
+            elif (b - 1) == a:
+                c = imgList3[4]
+                imgList3[4] = imgList3[3]
+                imgList3[3] = c
+                plt.subplot(3, 3, 5)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[4])
+                plt.subplot(3, 3, 4)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[3])
+                a = 5
+            elif (b + 3) == a:
+                c = imgList3[4]
+                imgList3[4] = imgList3[7]
+                imgList3[7] = c
+                plt.subplot(3, 3, 5)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[4])
+                plt.subplot(3, 3, 8)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[7])
+                a = 5
+            elif (b - 3) == a:
+                c = imgList3[4]
+                imgList3[4] = imgList3[1]
+                imgList3[1] = c
+                plt.subplot(3, 3, 5)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[4])
+                plt.subplot(3, 3, 2)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[1])
+                a = 5
+
+        if (x >= 335 and x <= 450) and (y >= 225 and y <= 340):
+            b = 6
+            if (b - 1) == a:
+                c = imgList3[5]
+                imgList3[5] = imgList3[4]
+                imgList3[4] = c
+                plt.subplot(3, 3, 6)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[5])
+                plt.subplot(3, 3, 5)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[4])
+                a = 6
+            elif (b + 3) == a:
+                c = imgList3[5]
+                imgList3[5] = imgList3[8]
+                imgList3[8] = c
+                plt.subplot(3, 3, 6)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[5])
+                plt.subplot(3, 3, 9)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[8])
+                a = 6
+            elif (b - 3) == a:
+                c = imgList3[5]
+                imgList3[5] = imgList3[2]
+                imgList3[2] = c
+                plt.subplot(3, 3, 6)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[5])
+                plt.subplot(3, 3, 3)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[2])
+                a = 6
+
+        if (x >= 70 and x <= 190) and (y >= 355 and y <= 470):
+            b = 7
+            if (b + 1) == a:
+                c = imgList3[6]
+                imgList3[6] = imgList3[7]
+                imgList3[7] = c
+                plt.subplot(3, 3, 7)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[6])
+                plt.subplot(3, 3, 8)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[7])
+                a = 7
+            elif (b - 3) == a:
+                c = imgList3[6]
+                imgList3[6] = imgList3[3]
+                imgList3[3] = c
+                plt.subplot(3, 3, 7)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[6])
+                plt.subplot(3, 3, 4)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[3])
+                a = 7
+
+        if (x >= 205 and x <= 325) and (y >= 355 and y <= 470):
+            b = 8
+            if (b - 1) == a:
+                c = imgList3[7]
+                imgList3[7] = imgList3[6]
+                imgList3[6] = c
+                plt.subplot(3, 3, 8)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[7])
+                plt.subplot(3, 3, 7)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[6])
+                a = 8
+            elif (b + 1) == a:
+                c = imgList3[7]
+                imgList3[7] = imgList3[8]
+                imgList3[8] = c
+                plt.subplot(3, 3, 8)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[7])
+                plt.subplot(3, 3, 9)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[8])
+                a = 8
+            elif (b - 3) == a:
+                c = imgList3[7]
+                imgList3[7] = imgList3[4]
+                imgList3[4] = c
+                plt.subplot(3, 3, 8)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[7])
+                plt.subplot(3, 3, 5)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[4])
+                a = 8
+
+        if (x >= 335 and x <= 450) and (y >= 355 and y <= 470):
+            b = 9
+            if (b - 1) == a:
+                c = imgList3[8]
+                imgList3[8] = imgList3[7]
+                imgList3[7] = c
+                plt.subplot(3, 3, 9)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[8])
+                plt.subplot(3, 3, 8)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[7])
+                a = 9
+            elif (b - 3) == a:
+                c = imgList3[8]
+                imgList3[8] = imgList3[5]
+                imgList3[5] = c
+                plt.subplot(3, 3, 9)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[8])
+                plt.subplot(3, 3, 6)
+                plt.gca().axes.xaxis.set_visible(False)
+                plt.gca().axes.yaxis.set_visible(False)
+                plt.imshow(imgList3[5])
+                a = 9
+        plt.show()
+
+
+cid = plt.connect('button_press_event', add_point)
+plt.subplots_adjust(wspace=0.01, hspace=0.02)
+plt.show()
