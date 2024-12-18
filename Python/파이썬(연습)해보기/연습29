@@ -1,0 +1,25 @@
+#파일내용 읽기 
+
+score = open("s.txt", "r", encoding="utf8")
+print(score.read())
+score.close()
+
+print("\n")
+
+#한줄씩
+score = open("s.txt", "r", encoding="utf8")
+print(score.readline())
+print(score.readline())
+print(score.readline())
+print(score.readline())
+score.close()
+
+
+
+#한줄씩 나오게 하지만 한줄 뛰기 없음
+score = open("s.txt", "r", encoding="utf8")
+print(score.readline(), end="")
+print(score.readline(), end="")
+print(score.readline(), end="")
+print(score.readline(), end="")
+score.close()
