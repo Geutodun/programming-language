@@ -1,0 +1,16 @@
+class Build(Unit):
+    def __init__(self, name, hp, location):
+        pass  #일단 건너뜀
+
+
+#서플라이 디폿 (본인 스타 안해서 모름,저장고 같음)
+supply = Build("서플라이 디폿", 500, "7시")
+
+def game_start():
+    print("[알림] 새로운 게임을 시작합니다")
+
+def game_over():
+    pass
+
+game_start()
+game_over()
