@@ -1,0 +1,39 @@
+class BigError(Exception):               #간단
+    pass
+
+try:
+    print("한 자리 숫자 나누기")
+    n1 = int(input("첫:"))
+    n2 = int(input("둘:"))
+    if n1 >= 10 or n2 >= 10:
+        raise BigError
+    print("{0} / {1} = {2}".format(n1, n2, int(n1 / n2)))
+except ValueError:
+    print("잘못된 값을 입력하엿습니다. 한 자리 숫자만 입력하세요")
+except BigError:
+    print("한자리가 아닌 숫자 입력")
+
+
+--------------------------------------------------------------------------------------------------------------------------------------
+
+class BigError(Exception):
+    def __init__(self, msg):                 #메세지도 같이 나오게 하기
+        self.msg = msg
+
+    def __str__(self):
+        return self.msg
+
+try:
+    print("한 자리 숫자 나누기")
+    n1 = int(input("첫:"))
+    n2 = int(input("둘:"))
+    if n1 >= 10 or n2 >= 10:
+        raise BigError("입력값 : {0}, {1}".format(n1, n2))
+    print("{0} / {1} = {2}".format(n1, n2, int(n1 / n2)))
+except ValueError:
+    print("잘못된 값을 입력하엿습니다. 한 자리 숫자만 입력하세요")
+except BigError as err:
+    print("한 자리가 아닌 숫자 입력")
+    print(err)
+    
+    
