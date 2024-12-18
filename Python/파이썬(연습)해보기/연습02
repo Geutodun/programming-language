@@ -1,5 +1,5 @@
 print("Hello")
-for X in range(3):
-    100
-    200
-print("END")    
+list(range(10))
+
+name = input("your name?")
+print("Hello", name)
