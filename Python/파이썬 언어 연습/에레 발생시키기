@@ -1,0 +1,15 @@
+try:
+    print("한 자리 숫자 나누기")
+    n1 = int(input("첫:"))
+    n2 = int(input("둘:"))
+    if n1 >= 10 or n2 >= 10:
+        raise ValueError
+    print("{0} / {1} = {2}".format(n1, n2, int(n1 / n2)))
+except ValueError:
+    print("잘못된 값을 입력하엿습니다. 한 자리 숫자만 입력하세요")
+
+
+
+
+
+**raise 
