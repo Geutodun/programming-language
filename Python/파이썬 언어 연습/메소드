@@ -1,0 +1,28 @@
+class AttackUnit:
+     def __init__(self, name, hp, damage):
+        self.name = name
+        self.hp = hp 
+        self.damage = damage
+
+
+     def a(self, location):
+        print("{0} : {1} 방향으로 이동한다!  [공격력 {2}]"\
+            .format(self.name, location, self.damage))
+
+     def d(self, damage):
+        print("{0} : {1} 체력 저하".format(self.name, damage))
+        self.hp -= damage
+        print("{0} : 현재 체력은 {1} 입니다".format(self.name, self.hp))
+        if self.hp <= 0:
+            print("{0} : 파괴되었습니다".format(self.name))
+
+
+
+#파이어
+fire1= AttackUnit("파이어", 60, 9)
+fire1.a("3시")
+
+
+#공격 2번 받기
+fire1.d(28)
+fire1.d(35)
