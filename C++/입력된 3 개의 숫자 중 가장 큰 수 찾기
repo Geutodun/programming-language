@@ -1,0 +1,26 @@
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+
+
+int main()
+{
+	int a, b, c;
+
+	cout << "첫번째 수 : ";
+	cin >> a;
+	cout << "두번째 수 : ";
+	cin >> b;
+	cout << "세번째 수 : ";
+	cin >> c;
+
+	if (a > b && a > c)
+		cout << "가장 큰수 : " << a << endl;
+	else if (b > a && b > c)
+		cout << "가장 큰수 : " << b << endl;
+	else if (c > b && c > a)
+		cout << "가장 큰수 : " << c << endl;
+	else 
+		cout << "찾을 수 없습니다." << endl;
+}
