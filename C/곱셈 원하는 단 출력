@@ -1,0 +1,16 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+int main()
+{
+	int i, n;
+	i = 1;
+
+	printf("출력하고 싶은 단:");
+	scanf("%d", &n);
+
+	while (i <= 120)
+	{
+		printf("%d*%3d = %3d\n", n, i, n * i);
+		i++;
+	}
+}
