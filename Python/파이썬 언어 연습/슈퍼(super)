@@ -1,0 +1,7 @@
+#다중 상속은 슈퍼는 안됨
+
+
+class Build(Unit):
+    def __init__(self, name, hp, location):
+        super().__init__(name, hp, 0)
+        self.location = location
