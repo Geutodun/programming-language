@@ -1,0 +1,11 @@
+import pickle
+
+with open("pro.pickle", "rb") as pro:
+    print(pickle.load(pro))
+
+
+with open("SS", "w", encoding="utf8") as study:
+    study.write("공부")
+
+with open("SS", "r", encoding="utf8") as study:
+    print(study.read())
