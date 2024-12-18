@@ -1,0 +1,8 @@
+Ss = {"영어":30, "국어":80}
+for subject, S in Ss.items():
+    #print(subject, S)
+
+
+                               #오른쪽으로 4칸을 확보한후 입력
+     print(subject.ljust(5), str(S).rjust(4), sep=":") 
+           #왼쪽으로5칸의 공간을 확보 다음 글자 입력
