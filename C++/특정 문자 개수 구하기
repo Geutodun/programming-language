@@ -1,0 +1,27 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+
+int main()
+{
+	string str;
+	cout << "문자열 입력 : ";
+	getline(cin, str);
+
+	char c;
+	cout << "찾을 문자 입력 : ";
+	cin >> c;
+
+	int size = str.size();
+	int count = 0;
+
+	for (int i = 0; i < size; i++)
+	{
+		if (str[i] == c)
+			count++;
+	}
+
+	cout << "찾을 문자인 " << c << "의 갯수 = " << count << endl;
+}
