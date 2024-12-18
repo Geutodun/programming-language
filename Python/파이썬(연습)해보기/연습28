@@ -1,0 +1,13 @@
+
+                       #파일을 만들기
+score = open("s.txt", "w", encoding="utf8")
+print("수학 : 70", file=score)
+print("영어 : 30", file=score)
+score.close()             
+ 
+                 #파일에 덮어쓰시
+
+score = open("s.txt", "a", encoding="utf8")
+score.write("과학 : 70")
+score.write("\n국어 : 80")
+score.close()
