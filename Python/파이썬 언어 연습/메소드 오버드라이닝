@@ -1,0 +1,62 @@
+class Unit:
+    def __init__(self, name, hp, speed):
+        self.name = name
+        self.hp = hp 
+        self.speed = speed
+    def move(self, location):
+        print("[지상유닛 이동]")
+        print("{0} : {1} 방향으로 이동  [속도 {2}]"\
+            .format(self.name, location, self.speed))        
+
+
+class AttackUnit(Unit):
+     def __init__(self, name, hp, speed, damage):
+        Unit.__init__(self, name, hp, speed)
+        self.damage = damage
+
+
+     def attack(self, location):
+        print("{0} : {1} 방향으로 이동한다 [공격력 {2}]"\
+            .format(self.name, location, self.damage))
+
+     def damaged(self, damage):
+        print("{0} : {1} 체력 저하".format(self.name, damage))
+        self.hp -= damage
+        print("{0} : 현재 체력은 {1} 입니다".format(self.name, self.hp))
+        if self.hp <= 0:
+            print("{0} : 파괴되었습니다".format(self.name))
+
+
+
+
+
+
+#나는 기능
+class Fly:
+    def __init__(self, fly_speed):
+        self.fly_speed = fly_speed
+
+    def fly(self, name, location):
+         print("{0} : {1} 좌표로 이동한다. [속도 {2}]".format(\
+             name, location, self.fly_speed))
+
+#공중 공격 뉴닛 클래스 
+class FA(AttackUnit, Fly):
+    def __init__(self, name, hp, damage, fly_speed):
+        AttackUnit.__init__(self, name, hp, 0, damage) #지상 스피드는 0으로 처리
+        Fly.__init__(self, fly_speed)
+
+    def move(self, location):
+        print("[공중유닛이동]")
+        self.fly(self.name, location)
+
+#벌쳐
+vilture = AttackUnit("벌쳐", 80, 10, 20)
+
+#배틀크루져
+battle = FA("배틀크루저", 500, 25, 3)
+
+
+vilture.move("11시")
+#battle.fly(battle.name, "9시")
+battle.move("9시")
