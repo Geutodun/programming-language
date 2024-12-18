@@ -1,0 +1,12 @@
+import pickle 
+pro = open("pro.pickle", "wb")
+p = {"이름":"정", "나이":20, "취미":["코딩", "게임"]}
+print(p)
+pickle.dump(p, pro)    #프로에 있는 정보를 파일에 저장
+pro.close()
+
+
+pro = open("pro.pickle", "rb")
+p = pickle.load(pro)  #파일 정보 불러오기
+print(p)
+pro.close()
