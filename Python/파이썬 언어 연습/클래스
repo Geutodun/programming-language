@@ -1,0 +1,64 @@
+#마린 
+name = "마린"
+hp = 50
+damage = 10
+
+print("{0} 유닛이 생성되었습니다 ".format(name))
+print("체력 {0}, 공격력 {1}\n".format(hp, damage))
+
+
+#탱크
+
+tank = "탱크"
+tank_hp = 100
+tank_damage = 35
+
+print("{0} 유닛이 생성되었습니다 ".format(tank))
+print("체력 {0}, 공격력 {1}\n".format(tank_hp, tank_damage ))
+
+
+tank2 = "탱크"
+tank2_hp = 100
+tank2_damage = 35
+
+print("{0} 유닛이 생성되었습니다 ".format(tank2))
+print("체력 {0}, 공격력 {1}\n".format(tank2_hp, tank2_damage ))
+
+
+#함수로
+
+def attack(name, location, damage):
+    print("{0} : {1} 방향으로 적군을 공격합니다. [공격력 {2}]".format( \
+        name , location, damage))
+
+attack(name, "1시", damage)
+attack(tank, "2시", tank_damage)
+attack(tank2, "3시", tank2_damage)
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+class Unit:
+    def __init__(self, name, hp, damage):
+        self.name = name
+        self.hp = hp 
+        self.damage = damage
+        print("{0} 유닛이 생성 되었습니다".format(self.name))
+        print("체력 {0}, 공격력 {1}".format(self.hp, self.damage))
+
+
+
+M1 = Unit("마린", 40, 5)
+M2 = Unit("마린", 40, 5)
+tank = Unit("탱크", 156, 35)
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+class Rhythm:
+    def __init__(self, name, speed):
+        self.name = name
+        self.speed = speed
+        print("지금 곡의 이름은 {0}이며, 스피드는 {1}입니다".format(self.name, self.speed))
+
+
+
+Game = Rhythm("성준이 강원도에서 감귤 포장하다", 4)
