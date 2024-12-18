@@ -1,0 +1,50 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+
+int main(void)
+{
+    double a;
+    int b;
+    double m = 1.0;
+    int n = 0;
+
+    printf("실수의 값을 입력하시오:");
+    scanf("%lf", &a);
+
+    printf("거듭제곱 횟수를 입력하시오:");
+    scanf("%d", &b);
+
+    while (b != n)
+    {
+        m = m * a;
+        n++;
+    }
+
+    printf("결과값은 %lf입니다.", m);
+
+    return 0;
+}
+
+-----------------------------------------------------------------------------------
+
+#include <stdio.h>
+#define _CRT_SECURE_NO_WARNINGS
+int main()
+{
+    double a;
+    int b;
+    double m = 1.0;
+
+    printf("실수의 값을 입력하시오:");
+    scanf("%lf", &a);
+
+    printf("거듭제곱 횟수를 입력하시오:");
+    scanf("%d", &b);
+
+    for (int n = 1; n <= b; n++)
+    {
+        m = m * a;
+    }
+
+    printf("결과값은 %lf입니다.", m);
+}
