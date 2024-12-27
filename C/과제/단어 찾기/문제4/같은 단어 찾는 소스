@@ -1,0 +1,42 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+
+int main(void)
+{
+
+	FILE* fp3 = fopen("dataOut.txt", "r");
+	if (fp3 == NULL)
+	{
+		fprintf(stderr, "원본 파일 data.txt를 열 수 없습니다.\n");
+		return 0;
+	}
+
+
+	char buffer[256], word[20];
+	int line = 0;
+	int count = 1;
+
+	printf("찾을 단어 : ");
+	fgets(word, 10, stdin);
+
+	while (!feof(fp3)) {
+		fgets(buffer, 256, fp3);
+		line++;
+		count = 1;
+		char* ptr = strtok(buffer, " ");
+		while (ptr != NULL)
+		{
+			if ((strcmp(ptr, word)) == 0)
+				printf("%d줄 %d번째", line, count);
+			count++;
+			ptr = strtok(NULL, " ");
+		}
+	}
+
+	fclose(fp3);
+	return 0;
+}
