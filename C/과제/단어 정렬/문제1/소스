@@ -1,0 +1,50 @@
+#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+
+int main()
+{
+	FILE* fp1 = fopen("data.txt", "r");
+	FILE* fp2 = fopen("dataOut.txt", "w");
+	if (fp1 == NULL)
+	{
+		fprintf(stderr, "원본 파일 data.txt를 열 수 없습니다.\n");
+		return 0;
+	}
+	int x = 0;
+	char* a;
+	char* data[20];
+	char *number;
+	for(int i =0;i<20;i++)
+	{
+		number = (char*)malloc(sizeof(char) * 100);
+		fgets(number, 100, fp1);
+		data[i] = number;
+	}
+
+	for (int i = 0; i < 20; i++)
+	{
+		for (int j = 0; j < 20-1; j++)
+		{
+			if ((strcmp(data[j], data[j + 1])) > 0 )
+			{
+				a = data[j];
+				data[j] = data[j + 1];
+				data[j + 1] = a;
+			}
+		}
+	}
+
+	for (size_t i = 0; i < 20; i++)
+	{
+		printf("%s", data[i]);
+		fprintf(fp2, "%s\n", data[i]);
+	}
+	fclose(fp1);
+	fclose(fp2);
+	return 0;
+}
