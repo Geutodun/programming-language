@@ -1,0 +1,164 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+typedef int element;
+typedef struct ListNode { 	// 노드 타입
+	element data;
+	struct ListNode* link;
+} ListNode;
+
+// 오류 처리 함수
+void error(char* message)
+{
+	fprintf(stderr, "%s\n", message);
+	exit(1);
+}
+ListNode* insert(ListNode* x, int y)
+{
+	ListNode* p = (ListNode*)malloc(sizeof(ListNode));	//(1)
+	p->data = y;					// (2)
+	p->link = x;	// 헤드 포인터의 값을 복사	//(3)
+	x = p;	// 헤드 포인터 변경		//(4)
+	return x;	// 변경된 헤드 포인터 반환
+}
+
+ListNode* delete(ListNode* x)
+{
+	ListNode* removed;
+	if (x == NULL) return NULL;
+	removed = x;	// (1)
+	x = removed->link;	// (2)
+	free(removed);		// (3)
+	return x;		// (4)
+}
+
+void print_list(ListNode* x)
+{
+	printf("{");
+	for (ListNode* p = x; p != NULL; p = p->link)
+		printf(" %d,", p->data);
+	printf(" }");
+	printf("\n");
+}
+
+void print_member(ListNode* x, int y)
+{
+	int i = 0;
+	for (ListNode* p = x; p != NULL; p = p->link)
+	{
+		if (p->data == y)
+		{
+			printf("집합에 포함된 숫자입니다.");
+			printf("\n");
+			i++;
+			break;
+		}
+	}
+	if (i == 0)
+	{
+		printf("집합에 없는 숫자입니다.");
+		printf("\n");
+	}
+}
+
+ListNode* sum(ListNode* x, ListNode* y, ListNode* z)
+{
+	for (ListNode* p = x; p != NULL; p = p->link)
+	{
+		int i = 0;
+		for (ListNode* q = y; q != NULL; q = q->link)
+		{
+			if (p->data == q->data)
+				i = 1;
+		}
+		if (i == 0)
+		{
+			z = insert(z, p->data);
+		}
+	}
+	for (ListNode* p = y; p != NULL; p = p->link)
+	{
+		int i = 0;
+		for (ListNode* q = x; q != NULL; q = q->link)
+		{
+			if (p->data == q->data)
+				i = 1;
+		}
+		if (i == 0)
+		{
+			z = insert(z, p->data);
+		}
+	}
+	return z;
+}
+
+
+ListNode* intersection(ListNode* x, ListNode* y, ListNode* z)
+{
+	for (ListNode* p = x; p != NULL; p = p->link)
+	{
+		int i = 0;
+		for (ListNode* q = y; q != NULL; q = q->link)
+		{
+			if (p->data == q->data)
+				i = 1;
+		}
+		if (i == 1)
+		{
+			z = insert(z, p->data);
+		}
+	}
+	return z;
+}
+
+
+ListNode* minus(ListNode* x, ListNode* y, ListNode* z)
+{
+	for (ListNode* p = x; p != NULL; p = p->link)
+	{
+		int i = 0;
+		for (ListNode* q = y; q != NULL; q = q->link)
+		{
+			if (p->data == q->data)
+				i = 1;
+		}
+		if (i == 0)
+		{
+			z = insert(z, p->data);
+		}
+	}
+	return z;
+}
+
+// 테스트 프로그램
+int main(void)
+{
+	ListNode* head1 = NULL;  //집합1
+	ListNode* head2 = NULL;  //집합2
+	ListNode* head3 = NULL;	 //합집합
+	ListNode* head4 = NULL;	 //교집합
+	ListNode* head5 = NULL;	 //차집합
+
+	for (int i = 0; i < 5; i++) 
+		head1 = insert(head1, i);
+	print_list(head1);
+	for (int i = 3; i < 16; i++) 
+		head2 = insert(head2, i);
+	print_list(head2);
+	head3 = sum(head1, head2, head3);
+	head4 = intersection(head1, head2, head4);
+	head5 = minus(head1, head2, head5);
+	print_list(head3);
+	print_list(head4);
+	print_list(head5);
+	
+	free(head1); //집합 삭제
+	free(head2);
+	free(head3);
+	free(head4);
+	free(head5);
+	return 0;
+}
