@@ -1,0 +1,80 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+int main()
+{
+		int x;
+		int y;
+		int dataA[10];
+		int dataB[20];
+		printf("dataA에 들어갈 수 입력 : ");
+		for (int i = 0; i < 10; i++)
+		{
+			scanf_s("%d", &dataA[i]);
+		}
+		printf("dataB에 들어갈 수 입력 : ");
+		for (int i = 0; i < 20; i++)
+		{
+			scanf_s("%d", &dataB[i]);
+		}
+		printf("\ndataA 수\n");
+		for (int i = 0; i < 10; i++)
+		{
+			printf("%d, ", dataA[i]);
+		}
+		printf("\ndataB 수\n");
+		for (int i = 0; i < 20; i++)
+		{
+			printf("%d, ", dataB[i]);
+		}
+
+		while (1)
+		{
+			printf("\nAND:1, OR : 2, 종료 : 0 \n");
+			printf("선택할 작업 : ");
+			scanf_s("%d", &x);
+			if (x == 1)
+			{
+				printf("AND 연산\n");
+				for (int i = 0; i < 10; i++)
+				{
+					for (int j = 0; j < 20; j++)
+					{
+						if (dataA[i] == dataB[j])
+						{
+							printf("%d, ", dataA[i]);
+						}
+					}
+				}
+			}
+			else if (x == 2)
+			{
+				printf("\nOR 연산\n");
+				for (int i = 0; i < 10; i++)
+				{
+					y = 0;
+					for (int j = 0; j < 20; j++)
+					{
+						if (dataA[i] == dataB[j])
+						{
+							y = 1;
+						}
+					}
+					if (y == 0)
+					{
+						printf("%d, ", dataA[i]);
+					}
+				}
+				for (int i = 0; i < 20; i++)
+				{
+					printf("%d, ", dataB[i]);
+				}
+			}
+			else if (x == 0)
+				break;
+			printf("\n----------------------------------------------------------");
+		}
+}
