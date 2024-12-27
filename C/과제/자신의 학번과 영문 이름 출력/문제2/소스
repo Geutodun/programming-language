@@ -1,0 +1,26 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+int main()
+{
+	while (1)
+	{
+		int a;
+		char x[100];
+		char y[100];
+		printf("영문 이름을 입력하세요:");
+		gets_s(x, 99);
+		printf("학번을 입력하세요:");
+		gets_s(y, 99);
+		printf("학번:%s 이름:%s\n", x,y);
+		printf("\n멈추겠습니까?(숫자 0 입력시 멈춤):");
+		scanf_s("%d", &a);
+		printf("---------------------------------------------------------");
+		if (a == 0)
+			break;
+
+	}
+}
