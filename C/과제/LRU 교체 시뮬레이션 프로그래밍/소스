@@ -1,0 +1,123 @@
+#pragma warning(disable:4996)
+#include <stdio.h>
+#include <stdlib.h>
+#define SIZE 4
+
+char page[SIZE];
+int newpage[SIZE];  //1이 가장최근 사용된 장소
+int interrupt;
+int total;
+
+void printpage() {
+	for (int i = 0; i < SIZE; i++)
+	{
+		if (page[i] == '0')
+		{
+			printf("Page Frame %d : empty\t/\t", i+1);
+		}
+		else
+		{
+			printf("Page Frame %d : %c\t/\t", i+1, page[i]);
+		}
+	}
+	printf("\n");
+}
+
+void pageRequest(char Request) {
+	int t = 0;
+	for (int i = 0; i < SIZE; i++)
+	{
+		if (Request == page[i])
+		{
+			t = 1;
+			if (newpage[i] == 0)
+			{
+				for (int j = 0; j < i; j++)
+				{
+					if (newpage[j] != 0)
+					{
+						newpage[j]--;
+					}
+				}
+				newpage[i] = SIZE - 1;
+				for (int e = i + 1; e < SIZE; e++)
+				{
+					if (newpage[e] != 0)
+					{
+						newpage[e]--;
+					}
+				}
+			}
+			else if (newpage[i] == (SIZE - 1))
+			{
+			}
+			else
+			{
+				int a = newpage[i];
+				for (int g = 0; g < SIZE; g++)
+				{
+					if (newpage[g] > a)
+					{
+						newpage[g]--;
+					}
+				}
+				newpage[i] = SIZE - 1;
+			}
+		}
+		
+	}
+	if (t != 1)
+	{
+		for (int i = 0; i < SIZE; i++)
+		{
+			if (newpage[i] == 0)
+			{
+				page[i] = Request;
+				for (int j = 0; j < i; j++)
+				{
+					if (newpage[j] != 0)
+					{
+						newpage[j]--;
+					}
+				}
+				newpage[i] = SIZE - 1;
+				for (int e = i + 1; e < SIZE; e++)
+				{
+					if (newpage[e] != 0)
+					{
+						newpage[e]--;
+					}
+				}
+				break;
+			}
+		}
+		interrupt++;
+	}
+	total++;
+}
+
+int main() {
+	for (int i = 0; i < SIZE; i++)
+	{
+		page[i] = '0';
+	}
+	for (int i = 0; i < SIZE; i++)
+	{
+		newpage[i] = 0;
+	}
+
+	while (1)
+	{
+		char x;
+		printf("현재 페이지 상황\n");
+		printpage();
+		printf("요청할 페이지(0을 입력하면 종료) : ");
+		scanf_s(" %c", &x);
+		if (x == '0')
+			break;
+		pageRequest(x);
+		printf("\n\n");
+	}
+	printf("총 요청 : %d\n", total);
+	printf("총 Interrupt 발생횟수 : %d\n", interrupt);
+}
