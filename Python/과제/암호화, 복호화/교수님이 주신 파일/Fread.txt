@@ -1,0 +1,40 @@
+#include <iostream>
+#include <fstream>
+#define SIZE 26
+
+using namespace std;
+
+int main() {
+	const char* file1 = "./alphabet.txt";
+	const char* file2 = "./alphabetcount.txt";
+
+	ifstream fin(file1);
+	ofstream fout(file2);
+	if (!fin || !fout) {
+		cout << file1 << " 열기 오류" << endl;
+		cout << file2 << " 열기 오류" << endl;
+		return 0;
+	}
+	//int count = 0;
+	int count[SIZE] = { 0 };
+	int c, i;
+	while ((c = fin.get()) != EOF) { // EOF를 만날 때까지 문자 읽기			
+		//cout << (char)c;
+		//count++;
+		if (c >= 'A' && c <= 'Z') {
+			count[c - 65]++;
+		}
+
+		if (c >= 'a' && c <= 'z') {
+			count[c - 97]++;
+		}
+	}
+
+	for (i = 0; i < SIZE; i++) {
+		cout << (char)(i + 97) << " = " << count[i] << endl;
+		fout << (char)(i + 97) << " = " << count[i] << endl;
+	}
+
+	fin.close(); // 파일 닫기
+	fout.close(); // 파일 닫기
+}
