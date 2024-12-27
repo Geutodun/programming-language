@@ -1,0 +1,37 @@
+#include <iostream>
+using namespace std;
+
+class Rectangle { // Rectangle 클래스 선언부
+public:
+	int width;
+	int height;
+	Rectangle();
+	Rectangle(int a);
+	Rectangle(int x, int y);
+	int isSquare();  // 면적을 계산하여 리턴하는 함수
+};
+
+Rectangle::Rectangle() : Rectangle(1, 1) {}
+Rectangle::Rectangle(int x, int y) : width(x), height(y) {}
+//Rectangle::Rectangle() : Rectangle(a, a) {}
+Rectangle::Rectangle(int a) : width(a), height(a) {}
+
+int Rectangle::isSquare() { // Rectangle 클래스 구현부
+	int v = 0;
+	if (width == height)
+		v = 1;
+	return v;
+}
+
+int main() {
+	Rectangle rect1;
+	Rectangle rect2(3, 5);
+	Rectangle rect3(3);
+
+	if (rect1.isSquare())
+		cout << "react1은 정사각형이다" << endl;
+	if (rect2.isSquare())
+		cout << "react2은 정사각형이다" << endl;
+	if (rect3.isSquare())
+		cout << "react3은 정사각형이다" << endl;
+}
