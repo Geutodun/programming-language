@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+
+
+typedef struct GraphType {
+	int n;	// 정점의 개수
+	int data[5][5];
+} GraphType;
+
+int visited[50];
+
+
+
+void dfs_mat(GraphType* g, int v)
+{
+	int w;
+	visited[v] = 1;		// 정점 v의 방문 표시 
+	printf("정점 %d -> ", v);		// 방문한 정점 출력
+	for (w = 0; w < g->n; w++) 		// 인접 정점 탐색
+		if ((g->data[v][w] == 1) && !(visited[w]==1))
+			dfs_mat(g, w);	//정점 w에서 DFS 새로 시작
+}
+
+
+
+
+int main()
+{
+	
+	GraphType* g;
+	g = (GraphType*)malloc(sizeof(GraphType));
+	g->n = 0;
+	FILE* fp1 = fopen("data.txt", "r");
+
+	if (fp1 == NULL)
+	{
+		fprintf(stderr, "원본 파일 data.txt를 열 수 없습니다.\n");
+		return 0;
+	}
+	int x = 0, y = 0;
+
+	int input;
+	while (fscanf(fp1, "%d", &input) != EOF)
+	{
+		g->n++;
+		g->data[x][y] = input;
+		y++;
+		if (y == 5)
+		{
+			y = 0;
+			x++;
+		}
+	}
+
+	dfs_mat(g, 0);
+	printf("\n");
+	
+	fclose(fp1);
+
+}
