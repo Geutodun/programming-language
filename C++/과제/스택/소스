@@ -1,0 +1,312 @@
+#include <iostream>
+using namespace std;
+
+template <class T>
+class Stack {
+	T* stack;
+	int top;               // top 초기화
+	int SIZE;
+	int STACK_SIZE;
+public:
+	Stack();
+	~Stack();
+	bool isEmpty();				// true, false 사용
+	bool isFull();			// true, false 사용
+	void push(T value);
+	void push(int location, T value);
+	void push_range(T values[], int arrSize);
+	void push_range(int location, T values[], int arrSize);
+	T pop();
+	T pop(int location);
+	void printStack();
+	int capacity();
+	int size();
+	void sort();
+};
+
+template <class T>
+Stack<T>::Stack() { // 생성자
+	top = -1; // 스택은 비어 있음
+	SIZE = 1;
+	STACK_SIZE = 10;
+	stack = new T[STACK_SIZE * SIZE];
+}
+
+template <class T>
+Stack<T>::~Stack() { // 소멸자
+	delete[] stack;
+}
+
+template <class T>
+bool Stack<T>::isFull() {
+	if (top % STACK_SIZE == 9) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+template <class T>
+bool Stack<T>::isEmpty() {
+	if (top == -1) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+template <class T>
+void Stack<T>::push(T value) {
+	T* temp;
+	if (isFull()) {
+		cout << " Full STACK" << endl;
+		temp = new T[STACK_SIZE * SIZE];
+		for (int i = 0; i < (top + 1); i++) {
+			temp[i] = stack[i];
+		}
+		delete[] stack;
+		stack = new T[STACK_SIZE * (SIZE + 1)];
+		for (int i = 0; i < (top + 1); i++) {
+			stack[i] = temp[i];
+		}
+		stack[++top] = value;  // top을 증가시킨 후 현재 top에 원소 삽입
+		SIZE++;
+		delete[] temp;
+	}
+	else {
+		stack[++top] = value;  // top을 증가시킨 후 현재 top에 원소 삽입
+	}
+}
+
+template <class T>
+void Stack<T>::push(int location, T value) {
+	T* temp;
+	if (location < 0 || location > top + 1) {
+		cout << " PUSH INDEX ERROR" << endl;
+		return;
+	}
+
+	if (isFull()) {
+		cout << " Full STACK" << endl;
+		temp = new T[STACK_SIZE * SIZE];
+		for (int i = 0; i < (top + 1); i++) {
+			temp[i] = stack[i];
+		}
+		delete[] stack;
+		stack = new T[STACK_SIZE * (SIZE + 1)];
+		for (int i = 0; i < (top + 1); i++) {
+			stack[i] = temp[i];
+		}
+		if (location > top) {
+			stack[location] = value;  // top을 증가시킨 후 현재 top에 원소 삽입
+		}
+		else {
+			for (int i = top; i >= location; i--) stack[i + 1] = stack[i];
+			stack[location] = value;
+		}
+		top++;
+		SIZE++;
+		delete[] temp;
+
+	}
+	else {
+		if (location > top) {
+			stack[location] = value;  // top을 증가시킨 후 현재 top에 원소 삽입
+		}
+		else {
+			for (int i = top; i >= location; i--) {
+				stack[i + 1] = stack[i];
+			}
+			stack[location] = value;
+		}
+		top++;
+	}
+}
+
+template <class T>
+void Stack<T>::push_range(T values[], int arrSize) {
+
+	for (int i = 0; i < arrSize; i++) {
+		push(values[i]);
+	}
+}
+
+template <class T>
+void Stack<T>::push_range(int location, T values[], int arrSize) {
+	if (location < 0 || location > top + 1) {
+		cout << " PUSH INDEX ERROR" << endl;
+		return;
+	}
+
+	for (int i = 0; i < arrSize; i++) {
+		push(location, values[i]);
+		location++;
+	}
+}
+
+template <class T>
+T Stack<T>::pop() {
+	if (isEmpty()) {	// 스택이 공백 상태인 경우
+		cout << " \nStack is Empty!!" << endl;
+		return 0;
+	}
+	else {			// 동적 배열로 구현
+		T re, * temp;
+
+		if (top % 10 == 0) {
+			cout << " CHANGE STACK" << endl;
+			re = stack[top];
+			temp = new T[STACK_SIZE * (SIZE - 1)];
+			for (int i = 0; i < top; i++) {
+				temp[i] = stack[i];
+			}
+			delete[] stack;
+			stack = new T[STACK_SIZE * (SIZE - 1)];
+			for (int i = 0; i < top; i++) {
+				stack[i] = temp[i];
+			}
+			delete[] temp;
+			top--;
+			SIZE--;
+
+			return re;
+		}
+		else {
+			return stack[top--];	// 현재 top의 원소를 삭제한 후 top 감소
+		}
+	}
+}
+
+template <class T>
+T Stack<T>::pop(int location) {
+	if (isEmpty()) {	// 스택이 공백 상태인 경우
+		cout << " \nStack is Empty!!" << endl;
+		return 0;
+	}
+	else {			// 동적 배열로 구현
+		T re, * temp;
+
+		if (location < 0 || location > top) {
+			cout << " POP INDEX ERROR" << endl;
+			return 0;
+		}
+
+		if (top % 10 == 0)
+		{
+			cout << " CHANGE STACK" << endl;
+			re = stack[location];
+			for (int i = location; i < top; i++) {
+				stack[i] = stack[i + 1];
+			}
+			temp = new T[STACK_SIZE * (SIZE - 1)];
+			for (int i = 0; i < top; i++) {
+				temp[i] = stack[i];
+			}
+			delete[] stack;
+			stack = new T[STACK_SIZE * (SIZE - 1)];
+			for (int i = 0; i < top; i++) {
+				stack[i] = temp[i];
+			}
+			delete[] temp;
+			top--;
+			SIZE--;
+
+			return re;
+		}
+		else {
+			re = stack[location];
+			for (int i = location; i < top; i++) {
+				stack[i] = stack[i + 1];
+			}
+			top--;
+			return re;	      // 현재 top의 원소를 삭제한 후 top 감소
+		}
+	}
+}
+
+template <class T>
+void Stack<T>::printStack() {
+	cout << "STACK SIZE [" << STACK_SIZE * SIZE << "]" << endl;
+	cout << "STACK [";
+	for (int i = 0; i <= top; i++) {
+		cout << stack[i] << " ";
+	}
+	cout << "]" << endl;
+}
+
+template <class T>
+int Stack<T>::capacity() {
+	//cout << "최대 스택 개수 : " << STACK_SIZE * SIZE << endl;
+	return STACK_SIZE * SIZE;
+}
+
+template <class T>
+int Stack<T>::size() {
+	//cout << "스택 개수 : " << top + 1 << endl;
+	return top + 1;
+}
+
+template <class T>
+void Stack<T>::sort() {
+	T temp;
+	for (int i = 0; i <= top; i++) {
+		for (int j = i; j <= top; j++) {
+			if (stack[i] > stack[j]) {
+				temp = stack[i];
+				stack[i] = stack[j];
+				stack[j] = temp;
+			}
+		}
+	}
+}
+
+
+int main()
+{
+	cout << "정수 스택 " << endl;
+	Stack<int> iStack; 
+	for (int i = 0; i < 12; i++) {
+		iStack.push(i);
+	}
+	int a[2] = { 30, 40 };
+	iStack.push_range(a, 2);
+	iStack.push_range(2, a, 2);
+	iStack.printStack();
+	cout << "스택 개수 : " << iStack.size() << endl;
+	cout << "최대 스택 개수 : " << iStack.capacity() << endl;
+	iStack.pop();
+	iStack.pop(2);
+	iStack.printStack();
+
+	cout << "\n\n실수 스택 " << endl;
+	Stack<double> dStack;
+	for (int i = 0; i < 12; i++) {
+		dStack.push(i + 0.1);
+	}
+	double b[2] = { 30.7, 40.7 };
+	dStack.push_range(b, 2);
+	dStack.push_range(2, b, 2);
+	dStack.printStack();
+	cout << "스택 개수 : " << dStack.size() << endl;
+	cout << "최대 스택 개수 : " << dStack.capacity() << endl;
+	dStack.pop();
+	dStack.pop(2);
+	dStack.printStack();
+
+	cout << "\n\n문자 스택 " << endl;
+	Stack<char> cStack;
+	for (int i = 65; i <= 90; i++) {
+		cStack.push(i);
+	}
+	char c[3] = { 'a', 'b', 'c'};
+	cStack.push_range(c, 3);
+	cStack.push_range(2, c, 3);
+	cStack.printStack();
+	cout << "스택 개수 : " << cStack.size() << endl;
+	cout << "최대 스택 개수 : " << cStack.capacity() << endl;
+	cStack.pop();
+	cStack.pop(2);
+	cStack.printStack();
+}
