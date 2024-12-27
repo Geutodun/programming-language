@@ -1,0 +1,16 @@
+words = [0 for i in range(26)]  #리스트 만들기
+
+file = open("alphabet.txt", 'r')
+while True:
+    char = file.read(1)  # 한 문자씩 읽기
+    if not char:  # 더 이상 읽을 문자가 없으면 종료
+        break
+    if char.isalpha():  # 문자가 알파벳인지 검사
+        a = char.lower()  # 문자를 소문자로 변경
+        words[ord(a) - 97] += 1  # 찾은 소문자 자리의 리스트 증가
+file.close()
+
+f = open("키값.txt", 'w')   # 키 값을 적을 파일
+for i in range(0, 26) :
+    f.write("%c = %d\n" % (chr(i +97), words[i]))   # 키값을 파일에 적기
+f.close()
