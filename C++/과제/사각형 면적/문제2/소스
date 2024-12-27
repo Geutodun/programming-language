@@ -1,0 +1,33 @@
+#include <iostream>
+using namespace std;
+
+class Rectangle { // Rectangle 클래스 선언부
+public:
+	int width;
+	int height;
+	Rectangle();
+	Rectangle(int x, int y);
+	int getArea();  // 면적을 계산하여 리턴하는 함수
+};
+
+Rectangle::Rectangle() {
+	width = 1;
+	height = 1;
+}
+
+Rectangle::Rectangle(int x, int y) {
+	width = x;
+	height = y;
+}
+
+int Rectangle::getArea() { // Rectangle 클래스 구현부
+	return width * height;
+}
+
+int main() {
+	Rectangle rect1;
+	cout << "사각형의 면적은 " << rect1.getArea() << endl;
+
+	Rectangle rect2(20, 30);
+	cout << "사각형의 면적은 " << rect2.getArea() << endl;
+}
