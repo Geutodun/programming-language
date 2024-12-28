@@ -1,0 +1,62 @@
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.GridLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class MyFrame extends JFrame {
+	public MyFrame() {
+		super("자바 스윙 계산기");
+		setSize(500, 300);
+		Container c = getContentPane();
+		c.add(new SouthPanel(), BorderLayout.SOUTH);
+		c.add(new CenterPanel(), BorderLayout.CENTER);
+		c.add(new NorthPanel(), BorderLayout.NORTH);
+		setVisible(true);
+	}
+	
+	public static void main(String[] args) {
+		new MyFrame();
+	}
+}
+
+class SouthPanel extends JPanel {
+	public SouthPanel() {
+		setBackground(Color.YELLOW);
+		setOpaque(true);  
+		add(new JLabel("계산 결과"));
+		add(new JTextField(30));
+	}
+}
+
+class CenterPanel extends JPanel {
+	private JButton buttons [] = { 
+			new JButton("C"), new JButton("UN"), new JButton("BK"), new JButton("/"),
+			new JButton("7"), new JButton("8"), new JButton("9"), new JButton("x"),
+			new JButton("4"), new JButton("5"), new JButton("6"), new JButton("-"),			
+			new JButton("1"), new JButton("2"), new JButton("3"), new JButton("+"),
+			new JButton("0"), new JButton("."), new JButton("="), new JButton("%") 
+	};
+	
+	public CenterPanel() {
+		setBackground(Color.WHITE);
+		setOpaque(true); 		
+		setLayout(new GridLayout(5,4,5,5)); 
+		for(int i=0; i<buttons.length; i++) {
+			add(buttons[i]);
+		}
+		buttons[18].setBackground(Color.CYAN); 
+	}
+}
+
+class NorthPanel extends JPanel {
+	public NorthPanel() {
+		setBackground(Color.GRAY); 
+		setOpaque(true); 
+		add(new JLabel("수식"));
+		add(new JTextField(30));
+	}
+}
