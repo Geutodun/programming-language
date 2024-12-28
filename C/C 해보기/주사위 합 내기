@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+int rand_n();
+
+
+int main()
+{
+	srand(time(NULL));
+	int u1 = rand_n(), u2 = rand_n(), u3 = rand_n();
+	int c1 = rand_n(), c2 = rand_n(), c3 = rand_n();
+
+	int a = u1 + u2 + u3;
+	int b = c1 + c2 + c3;
+	printf("사용자 주사위=(%d, %d, %d) = %d\n", u1, u2, u3, a);
+	printf("컴퓨터 주사위=(%d, %d, %d) = %d\n", c1, c2, c3, b);
+	if (a > b)
+		printf("사용자 승리\n");
+	else
+		printf("컴퓨터 승리\n");
+}
+
+
+int rand_n()
+{	
+	int x = 0;
+	while (1)
+	{
+	int x = rand() % 7;
+
+	if (x != 0)
+	{
+		return x;
+		break;
+	}
+
+	}
+	
+}
