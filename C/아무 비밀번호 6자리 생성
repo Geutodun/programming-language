@@ -1,0 +1,19 @@
+#include <stdio.h>
+#include <stdio.h>
+#include <time.h>  
+
+int main()
+{
+	srand(time(NULL));
+	char x[7];
+	char y;
+	int a = 0;
+	while (a < 6)
+	{
+		y = '!' + (rand() % 94);
+		x[a] = y;
+		a++;
+	}
+	x[a] = '\0';
+	printf("%s", x);
+}
