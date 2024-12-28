@@ -1,0 +1,118 @@
+import java.io.File;
+import java.util.Scanner;
+
+public class FileExplorer {
+	private File currentDir = null;
+	private File subFiles [] = null;
+	
+	public FileExplorer(String dirName) {
+		currentDir = new File(dirName);
+	}
+
+	private void showSubDirtories() {
+		System.out.println("\t[" + currentDir.getPath() + "]");
+		subFiles = currentDir.listFiles();
+		for(File f : subFiles) {
+			System.out.print(((f.isFile())?"file":"dir"));
+			System.out.printf("%-15s", "\t\t" + f.length() + "바이트");
+			System.out.println("\t\t" + f.getName());
+		}		
+	}
+	
+	private boolean contains(String filename) {
+		for(File f : subFiles) {
+			if(f.getName().equalsIgnoreCase(filename))
+				return true;
+		}
+		return false;
+	}
+	
+	public void run() {
+		Scanner scanner = new Scanner(System.in);
+		
+		System.out.println("***** 파일 탐색기입니다. *****");
+		showSubDirtories();
+		
+		while(true) {
+			System.out.print(">>");
+			String command = scanner.nextLine().trim(); // 한 라인을 읽고 앞뒤에 입력한 빈칸 지우기
+			
+			if(command.equals("그만"))
+				break; // 프로그램 종료
+			
+			if(command.equals("..")) {
+				String s = currentDir.getParent();
+				if(s == null) // s가 null이면, currentDir가 현재 최상위 디렉터리라서 부모 디렉터리가 없음
+					continue;
+				else { 					
+					currentDir = new File(currentDir.getParent());
+					showSubDirtories();
+				}
+			}
+			
+			else if(command.startsWith("mkdir ")) { // mkdir 명령어로 시작하는 경우
+                String dirName = command.substring(6).trim(); 
+                File newDir = new File(currentDir, dirName);
+                if (!newDir.exists()) { // 디렉터리가 존재하지 않으면 생성
+                    if(newDir.mkdir()) {
+                        System.out.println(dirName + "' 디렉터리를 생성하였습니다.");
+                    } else {
+                        System.out.println("디렉터리 생성 실패!");
+                    }
+                } else {
+                    System.out.println("디렉터리가 이미 존재합니다.");
+                }
+                showSubDirtories(); // 새로 생성된 디렉터리 포함하여 목록 표시
+			}
+			
+			else if(command.startsWith("rename ")) { 
+				String[] parts = command.split(" ");
+				if(parts.length == 3) { 
+					String oldName = parts[1].trim();
+					String newName = parts[2].trim();
+					File oldFile = new File(currentDir, oldName);
+					File newFile = new File(currentDir, newName);
+					
+					if(oldFile.exists()) {
+						if(!newFile.exists()) { 
+							if(oldFile.renameTo(newFile)) {
+								System.out.println("'" + oldName + "'를 '" + newName + "'이름 변경하였습니다.");
+							} else {
+								System.out.println("이름 변경 실패!");
+							}
+						} else {
+							System.out.println("새 이름의 파일이나 디렉터리가 이미 존재합니다.");
+						}
+					} else {
+						System.out.println("지정한 파일이나 디렉터리가 존재하지 않습니다.");
+					}
+				} 
+				else {
+					System.out.println("두개의 파일명이 주어지지 않았습니다.");
+				}
+				showSubDirtories();
+			}
+			
+			else { // command는 서브디렉토리이름
+				if(contains(command)) { // 현재 디렉터리의 파일이나 서브디렉토리라면
+					if(new File(currentDir, command).isDirectory()) { // 디렉터리라면
+						currentDir = new File(currentDir, command);
+						showSubDirtories();
+					}
+					else { // 파일인 경우
+						System.out.println("\t디렉터리가 아닙니다.!");
+					}
+				}
+			}
+			
+			
+		}
+		
+		scanner.close();
+	}
+	
+	public static void main(String[] args) {
+		FileExplorer fe = new FileExplorer("c:\\");
+		fe.run();
+	}
+}
