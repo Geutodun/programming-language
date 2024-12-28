@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int get(int);
+
+
+
+int main()
+{
+	int a;
+	printf("소수 몇개? : ");
+	scanf_s("%d", &a);
+	printf("소수는 %d개 입니다.", get(a));
+}
+
+
+
+int get(int a)
+{
+	int j;
+	int x = 0;
+	for (int i = 1; i <= a; i++)
+	{
+		for (j = 2; j < i; j++)
+		{
+			if (i % j == 0)
+			{
+				break;
+			}
+		}
+		if (j == i)
+		{
+			x++;
+		}
+	}
+	return x;
+}
