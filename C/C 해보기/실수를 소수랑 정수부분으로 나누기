@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void get();
+
+
+
+int main()
+{
+	double a = 3.14;
+	get(a);
+}
+
+
+
+
+void get(double x)
+{	
+	int i = (int)x;
+	printf("전달박은 실수 = %lf\n", x);
+	printf("정수부 = %d\n", i);
+	printf("소수부 = %lf\n", x - i);
+}
+	
