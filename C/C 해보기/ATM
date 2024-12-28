@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+void welcome();
+int in(int x);
+int out(int x);
+
+
+int main()
+{
+	int a, b = 0;
+	while (1)
+	{
+		welcome();
+		scanf_s("%d", &a);
+		if (a == 1)
+			printf("%d\n", b);
+		if (a == 2)
+		{
+			b = in(b);
+			printf("새로운 잔고는 %d입니다\n", b);
+		}
+		if (a == 3)
+		{
+			b = out(b);
+			printf("새로운 잔고는 %d입니다\n", b);
+		}
+		if (a == 4)
+			break;
+	}
+
+}
+
+
+void welcome()
+{
+	printf("********Welcome to 콘서트 ATM********\n");
+	printf("****하나를 선택하시오****\n");
+	printf("<1> 잔고확인\n");
+	printf("<2> 입금\n");
+	printf("<3> 출금\n");
+	printf("<4> 종료\n");
+}
+
+int in(int x)
+{	
+	int y;
+	printf("***입금 금액을 입력하세요\n");
+	scanf_s("%d", &y);
+	return x + y;
+}
+
+int out(int x)
+{
+	int y;
+	printf("***출금 금액을 입력하세요\n");
+	scanf_s("%d", &y);
+	return x - y;
+}
