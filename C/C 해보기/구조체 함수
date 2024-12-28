@@ -1,0 +1,66 @@
+4.
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+struct time
+{
+	int a;
+	int b;
+	int c;
+};
+struct time diff_time(struct time x, struct time y);
+
+int main()
+{
+	struct time x, y, c;
+	printf("시작시간(시,분,초):");
+	scanf_s("%d %d %d", &x.a, &x.b, &x.c);
+	printf("종료시간(시,분,초):");
+	scanf_s("%d %d %d", &y.a, &y.b, &y.c);
+	c = diff_time(x, y);
+	printf("소요시간 %d:%d:%d", c.a, c.b, c.c);
+}
+struct time diff_time(struct time x, struct time y)
+{
+	struct time e;
+	e.a = y.a - x.a;
+	e.b = y.b - x.b;
+	e.c = y.c - x.c;
+
+	return e;
+}
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+3.
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+
+struct abc
+{
+	int a;
+	int b;
+};
+struct abc add_complex(struct abc x, struct abc y);
+
+int main()
+{
+	struct abc x, y, c;
+	printf("첫번째 복소수를 입력하세요:");
+	scanf_s("%d %d", &x.a, &x.b);
+	printf("두번째 복소수를 입력하세요:");
+	scanf_s("%d %d", &y.a, &y.b);
+	c = add_complex(x, y);
+	printf("%d + %di", c.a, c.b);
+}
+	
+struct abc add_complex(struct abc x, struct abc y)
+{
+	struct abc e;
+	e.a = x.a + y.a;
+	e.b = x.b + y.b;
+	return e;
+}
