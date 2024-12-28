@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+int main()
+{
+	char x[100];
+	int z[26] = {0};
+	printf("텍스트를 입력하세요:");
+	gets_s(x, 99);
+	int i;
+	for (i = 0; x[i] != '\0'; i++)
+	{
+		if (x[i] == 'a')
+			x[i] = ' ';
+		else if (x[i] == 'e')
+			x[i] = ' ';
+		else if (x[i] == 'e')
+			x[i] = ' ';
+		else if (x[i] == 'i')
+			x[i] = ' ';
+		else if (x[i] == 'o')
+			x[i] = ' ';
+		else if (x[i] == 'u')
+			x[i] = ' ';
+
+	}
+
+	printf("%s", x);
+}
