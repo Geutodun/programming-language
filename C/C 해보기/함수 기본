@@ -18,3 +18,4 @@ int main()
 	int x = get();
 	int y = get();
 	printf("두 수의 합은 %d입니다.", sum(x, y));
+}
