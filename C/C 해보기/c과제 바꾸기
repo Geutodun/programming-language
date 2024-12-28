@@ -1,0 +1,195 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define SIZE 26
+
+int main(void)
+{
+	int count1[26] = { 0 };
+	int count2[26];
+	FILE* fp1 = NULL;
+	FILE* fp2 = NULL;
+	FILE* fp3 = NULL;
+	int c, i, j, t, temp1, temp2;	// 정수 변수에 주의한다. 
+
+	fp1 = fopen("alphabet.txt", "r");
+	fp2 = fopen("sortedalphabet.txt", "r");
+	fp3 = fopen("change.txt", "w");
+
+	if (fp1 == NULL || fp2 == NULL || fp3 == NULL) {
+		fprintf(stderr, "원본 파일 alphabet.txt를 열 수 없습니다.\n");
+		exit(1);
+	}
+
+	int a = 0;
+
+	while ((c = fgetc(fp2)) != EOF) {
+		if (c >= 'a' && c <= 'z') {
+			count1[a++] = c;
+		}
+	}
+
+	for (i = 0; i < SIZE; i++) {
+		printf("%c \n",count1[i]);
+	}
+
+	while ((c = fgetc(fp1)) != EOF) {
+		if (c >= 'A' && c <= 'Z') {
+			c = c - 65;
+		}
+		else 
+		{
+			c = c - 97;
+		}
+		for (i = 0; i < 26; i++)
+		{
+			if (c == i) {
+				fprintf(fp3, "%c", count1[i]);
+			}
+		}
+	}
+
+
+	fclose(fp1);
+	fclose(fp2);
+	fclose(fp3);
+
+
+
+
+}
+
+
+
+-----------------------------------------------------------------------------------------
+
+
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define SIZE 26
+
+int main(void)
+{
+	int count1[26] = { 0 };
+	int count2[26];
+	FILE* fp1 = NULL;
+	FILE* fp2 = NULL;
+	FILE* fp3 = NULL;
+	int c, i, j, t, temp1, temp2;	// 정수 변수에 주의한다. 
+
+	fp1 = fopen("alphabet.txt", "r");
+	fp2 = fopen("sortedalphabet.txt", "r");
+	fp3 = fopen("change.txt", "w");
+
+	if (fp1 == NULL || fp2 == NULL || fp3 == NULL) {
+		fprintf(stderr, "원본 파일 alphabet.txt를 열 수 없습니다.\n");
+		exit(1);
+	}
+
+	int a = 0;
+
+	while ((c = fgetc(fp2)) != EOF) {
+		if (c >= 'a' && c <= 'z') {
+			count1[a++] = c;
+		}
+	}
+
+
+	while ((c = fgetc(fp1)) != EOF) {
+		if (c >= 'A' && c <= 'Z') {
+			c = c - 65;
+		}
+		else 
+		{
+			c = c - 97;
+		}
+		for (i = 0; i < 26; i++)
+		{
+			if (c == i) {
+				printf("%c", count1[i]);
+				fprintf(fp3, "%c", count1[i]);
+			}
+		}
+	}
+
+
+	fclose(fp1);
+	fclose(fp2);
+	fclose(fp3);
+
+
+
+
+}
+
+-----------------------------------------------------------------------------------------
+*원상 복구
+
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define SIZE 26
+
+int main(void)
+{
+	int count1[26] = { 0 };
+	int count2[26] = {0};
+	FILE* fp1 = NULL;
+	FILE* fp2 = NULL;
+	FILE* fp3 = NULL;
+	int c, i, j, t, temp1, temp2;	// 정수 변수에 주의한다. 
+
+	fp1 = fopen("change.txt", "r");
+	fp2 = fopen("sortedalphabet.txt", "r");
+	fp3 = fopen("change1.txt", "w");
+
+	if (fp1 == NULL || fp2 == NULL || fp3 == NULL) {
+		fprintf(stderr, "원본 파일 alphabet.txt를 열 수 없습니다.\n");
+		exit(1);
+	}
+
+	for (i = 0; i < 26; i++)
+	{
+		count2[i] = 'a' + i;
+	}
+
+	int a = 0;
+
+	while ((c = fgetc(fp2)) != EOF) {
+		if (c >= 'a' && c <= 'z') {
+			count1[a++] = c;
+		}
+	}
+
+
+	while ((c = fgetc(fp1)) != EOF) {
+		
+		if (c >= 'a' && c <= 'z') {
+			for (i = 0; i < 26; i++)
+			{
+				if (c == count1[i]) {
+					printf("%c", count2[i]);
+					fputc(count2[i], fp3);
+				}
+			}
+		}
+		else {
+			fputc(c, fp3);
+		}
+		
+	}
+
+
+	fclose(fp1);
+	fclose(fp2);
+	fclose(fp3);
+
+
+
+
+}
