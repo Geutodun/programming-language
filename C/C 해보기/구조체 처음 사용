@@ -1,0 +1,29 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>  
+#include <string.h>
+
+struct email
+{
+	char title[100];
+	char email_1[50];
+	char email_2[50];
+	char content[1000];
+	char day[100];
+};
+
+int main()
+{
+	struct email x;
+	strcpy(x.title, "메일");
+	strcpy(x.email_1, "awdasdawdasd@adsd.com");
+	strcpy(x.email_2, "axdfzxaswd@adsd.com");
+	strcpy(x.content, "메일메일메일메일");
+	strcpy(x.day, "2019/9/9");
+	printf("%s\n", x.title);
+	printf("%s\n", x.email_1);
+	printf("%s\n", x.email_2);
+	printf("%s\n", x.content);
+	printf("%s\n", x.day);
+}
