@@ -1,0 +1,26 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+int main()
+{
+	
+	double* x;
+	double y = 0;
+	int a;
+	printf("요소의 개수:");
+	scanf_s("%d", &a);
+	x = (double*)malloc(a * sizeof(double));
+	for (int i = 0; i < a; i++)
+	{
+		printf("배열의 요소를 입력하시요:");
+		scanf_s("%lf", &x[i]);
+	}
+	for (int i = 0; i < a; i++)
+	{
+		y += x[i];
+	}
+	printf("합 = %lf", y);
+}
