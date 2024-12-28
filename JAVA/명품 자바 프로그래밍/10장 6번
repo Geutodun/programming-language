@@ -1,0 +1,109 @@
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Random;
+import javax.swing.*;
+
+class WESTPanel extends JPanel {
+    private JButton[] buttons = new JButton[10];
+    private Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.ORANGE,
+                              Color.PINK, Color.CYAN, Color.MAGENTA, Color.GRAY, Color.BLACK};
+    private CenterPanel centerPanel;
+
+    public WESTPanel(CenterPanel centerPanel) {
+        this.centerPanel = centerPanel; // CenterPanel 참조 저장
+        setLayout(new GridLayout(10, 1)); // 10행 1열의 그리드 레이아웃
+
+        // 버튼 생성 및 색상 설정
+        for (int i = 0; i < 10; i++) {
+            buttons[i] = new JButton(); // 텍스트 없는 버튼 생성
+            buttons[i].setBackground(colors[i]); // 버튼 배경색 설정
+            buttons[i].setOpaque(true);
+            buttons[i].setBorderPainted(false); // 테두리 제거
+            buttons[i].setFocusPainted(false); // 포커스 색 제거
+
+            // 버튼 클릭 이벤트 추가
+            int index = i; // 람다에서 사용할 변수
+            buttons[i].addActionListener(e -> centerPanel.changeLabelColors(colors[index]));
+
+            add(buttons[i]); // 버튼 추가
+        }
+    }
+}
+
+class CenterPanel extends JPanel {
+    private JLabel[] numberLabels = new JLabel[10];
+    private Random rand = new Random();
+
+    public CenterPanel() {
+        setLayout(null); // 절대 위치 지정
+
+        // 0~9 숫자를 생성하고 각각 라벨로 추가
+        for (int i = 0; i < 10; i++) {
+            numberLabels[i] = new JLabel(String.valueOf(i));
+            numberLabels[i].setFont(new Font("Arial", Font.BOLD, 24));
+            numberLabels[i].setForeground(Color.BLACK); // 초기 색상
+            add(numberLabels[i]);
+            randomizeLabelPosition(numberLabels[i]);
+        }
+
+        // 마우스 클릭 이벤트 추가 (위치 변경)
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                randomizeAllLabels();
+            }
+        });
+    }
+
+    // 특정 라벨의 위치를 랜덤으로 변경
+    private void randomizeLabelPosition(JLabel label) {
+        int x = 50 + rand.nextInt(151); // X 좌표 (50~200)
+        int y = 50 + rand.nextInt(151); // Y 좌표 (50~200)
+        label.setBounds(x, y, 30, 30); // 라벨 위치와 크기 설정
+    }
+
+    // 모든 라벨의 위치를 랜덤으로 변경
+    private void randomizeAllLabels() {
+        for (JLabel label : numberLabels) {
+            randomizeLabelPosition(label);
+        }
+        repaint(); // 변경된 위치를 다시 그리기
+    }
+
+    // 모든 숫자 라벨의 색상을 변경
+    public void changeLabelColors(Color color) {
+        for (JLabel label : numberLabels) {
+            label.setForeground(color); // 텍스트 색상 변경
+        }
+    }
+}
+
+class MyFrame extends JFrame {
+    public MyFrame() {
+        setTitle("West Grid 프레임");
+        setSize(400, 400); // 창 크기
+        setResizable(false); // 창 크기 변경 불가
+        setLocationRelativeTo(null); // 화면 중앙에 표시
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        Container c = getContentPane();
+        c.setLayout(new BorderLayout()); // BorderLayout 사용
+
+        // 가운데(CENTER) 패널 생성
+        CenterPanel centerPanel = new CenterPanel();
+
+        // 서쪽(WEST) 패널 생성 및 추가
+        c.add(new WESTPanel(centerPanel), BorderLayout.WEST);
+
+        // 가운데 패널 추가
+        c.add(centerPanel, BorderLayout.CENTER);
+
+        setVisible(true);
+    }
+}
+
+public class Hello2030 {
+    public static void main(String[] args) {
+        new MyFrame();
+    }
+}
