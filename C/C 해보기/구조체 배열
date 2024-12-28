@@ -1,0 +1,71 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct x {
+	int n;	
+	char name[20];	
+	int age;		
+	char number[20];	
+};
+int main()
+{
+	struct x a[10] = {
+		{ 1, "name1", 34, "010-1234-3333" },
+		{ 2, "name2", 27, "010-1234-5555" },
+		{ 3, "name3", 73, "010-1234-6666" },
+		{ 4, "name4", 25, "010-1234-7777" },
+		{ 5, "name5", 37, "010-1234-8888" },
+		{ 6, "name6", 27, "010-1234-9999" },
+		{ 7, "name7", 64, "010-1234-0000" },
+		{ 8, "name8", 27, "010-1234-1111" },
+		{ 9, "name9", 48, "010-1234-2222" },
+		{ 10, "name10", 59, "010-1234-4444" } };
+	int i;
+	for (i = 0; i < 10; i++)
+		if (a[i].age >= 20 && a[i].age <= 30)
+			printf("%s\n", a[i].name);
+	
+}
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct x
+{
+	char name[30];
+	int price;
+	int amount;
+	int total;
+};
+
+int main()
+{
+
+	struct x a[100];
+	int y;
+	
+	for (int i = 0; i < 3; i++) 
+	{
+		printf("===================\n");
+		printf("상품의 이름: ");
+		gets_s(a[i].name, 30);
+		printf_s("상품의 가격: ");
+		scanf_s("%d", &a[i].price);
+		printf("상품의 개수: ");
+		scanf_s("%d", &a[i].amount);
+		getchar();
+		a[i].total = a[i].price * a[i].amount;
+		printf("===================\n");
+	}
+
+	printf("검색할 품목 : 1.%s  2.%s  3.%s : ", a[0].name, a[1].name, a[2].name );
+	scanf_s("%d", &y);
+	
+	printf("상품의 개수: %d \n", a[y-1].amount);
+
+}
