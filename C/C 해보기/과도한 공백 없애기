@@ -1,0 +1,24 @@
+#include <stdio.h>
+
+int main()
+{
+	char x[100], y[100];
+	int a = 0, b = 0;
+
+	printf("텍스트를 입력하시오: ");
+	gets_s(x, 100);
+
+	while (x[a] != '\0')
+	{
+		if (!(x[a] == ' ' && x[a + 1] == ' ')) 
+		{
+			y[b] = x[a];
+			b++;
+		}
+		a++;
+	}
+
+	y[b] = '\0';
+
+	printf("공백이 제거된 텍스트: %s \n", y);
+}
