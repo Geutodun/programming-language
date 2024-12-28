@@ -1,0 +1,31 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct course
+{
+	char subject[30];
+	double marks;
+};
+
+int main(void)
+{
+	
+	struct course* x;
+	int y;
+	printf("구조체의 개수:");
+	scanf_s("%d", &y);
+	x = (struct course*)malloc(y * sizeof(struct course));
+	for (int i = 0; i < y; i++)
+	{
+		printf("과목 이름과 성적을 입력하세요 : ");
+		scanf("%s %lf", &(x[i].subject), &(x[i].marks));
+	}
+	printf("저장된 정보 출력\n");
+	for (int i = 0; i < y; i++)
+	{
+		printf("%s\t%lf\n", x[i].subject, x[i].marks);
+	}
+	return 0;
+}
