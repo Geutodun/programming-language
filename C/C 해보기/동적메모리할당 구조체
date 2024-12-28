@@ -1,0 +1,23 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct rec
+{
+	int i;
+	float PI;
+	char A;
+};
+
+int main()
+{
+	
+	struct rec * x;
+	int y;
+	x = (struct rec*)malloc(1 * sizeof(struct rec));
+	x[0].i = 10;
+	x[0].PI = 3.14;
+	x[0].A = 'a';
+	printf("%d\n%lf\n%c", x[0].i, x[0].PI, x[0].A);
+}
