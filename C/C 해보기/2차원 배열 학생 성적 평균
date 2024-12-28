@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+int main()
+{
+    int abc[3][3] = { 
+        {30, 10 ,11}, 
+        {40, 90, 32}, 
+        {70, 65, 56} 
+    };
+    double x = 0, y = 0, z = 0;
+   
+
+    for (int i = 0;i<3;i++)
+    {
+        x = x + abc[0][i];
+    }
+
+    for (int i = 0;i<3;i++)
+    {
+        y = y + abc[1][i];
+    }
+
+    for (int i = 0;i<3;i++)
+    {
+        z = z + abc[2][i];
+    }
+
+    printf("1번 학생 평균:%lf, 2번 학생의 평균:%lf, 3번 학생의 평균:%lf", x / 3.0, y / 3.0, z / 3.0);
+}
