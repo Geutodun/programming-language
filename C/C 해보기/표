@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+int main()
+{
+	char name1[6] = { "학번"};
+	char name2[10] = { "시험#1" };
+	char name3[10] = { "시험#2" };
+	char name4[10] = {"시험#3"};
+	int score[3][4] = { {1,30, 10,11},{2,40,90,32},{3,70,65,56} };
+	double a=0, b=0, c=0;
+
+
+	printf("%s ", name1);
+	printf("%s ", name2);
+	printf("%s ", name3);
+	printf("%s ", name4);
+	printf("\n");
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			printf(" %d    ", score[i][j]);
+		}
+		printf("\n");
+	}
+
+	for (int i = 1; i <= 3; i++)
+	{
+		a = score[0][i] + a;
+	}
+	printf("1학번 학생의 평균은 %lf이다\n", a / 3);
+
+	for (int i = 1; i < 3; i++)
+	{
+		b = score[1][i] + b;
+	}
+	printf("2학번 학생의 평균은 %lf이다\n", b / 3);
+
+	for (int i = 1; i < 3; i++)
+	{
+		c = score[2][i] + c;
+	}
+	printf("3학번 학생의 평균은 %lf이다\n", c / 3);
+	
+}
