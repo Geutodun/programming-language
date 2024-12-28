@@ -1,0 +1,48 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+
+
+int main()
+{
+
+	int* c, * d, a =10;
+	int top = -1;
+	c = (int*)malloc(a * sizeof(int));
+	d = (int*)malloc(a * sizeof(int));
+	while (a < 100)
+	{
+		c = (int*)malloc(a * sizeof(int));
+
+		for (int i = 0; i < top+1; i++)
+		{
+			c[i] = d[i];
+		}
+		d = (int*)malloc(a * sizeof(int));
+
+
+		for (int i = top+1; i < a; i++)
+		{
+			top++;
+			c[i] = top;
+			printf("%d\n", c[i]);
+		}
+		for (int i = 0; i < a; i++)
+		{
+			d[i] = c[i];
+			
+		}
+
+		if ((top + 1) == a)
+		{
+			a = a + 10;
+		}
+		
+	}
+
+
+
+}
