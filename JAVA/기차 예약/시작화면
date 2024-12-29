@@ -1,0 +1,86 @@
+package train;
+
+import java.awt.event.*;
+import java.awt.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import javax.swing.*;
+
+class SouthPanel extends JPanel {
+    public SouthPanel(JFrame frame) {
+        setBackground(Color.white);
+        setOpaque(true);
+        JButton btn = new JButton("기차예약");
+        btn.addActionListener(new MyActionListener(frame)); // Action 리스너 추가
+        add(btn);
+    }
+}
+
+class NorthPanel extends JPanel {
+    // 현재 날짜 구하기        
+    LocalDate now = LocalDate.now();         
+    // 포맷 정의        
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");         
+    // 포맷 적용        
+    String formatedNow = now.format(formatter);
+
+    public NorthPanel() {
+        setBackground(Color.LIGHT_GRAY);
+        setOpaque(true);
+
+        // JLabel 생성
+        JLabel dateLabel = new JLabel(formatedNow);
+
+        // 글씨 크기와 스타일 설정
+        dateLabel.setFont(new Font("Serif", Font.BOLD, 20)); // Serif 폰트, 굵게, 크기 20
+
+        // 패널에 라벨 추가
+        add(dateLabel);
+    }
+}
+
+class CenterPanel extends JPanel {
+    public CenterPanel() {
+    	ImageIcon icon = new ImageIcon("D:\\eclipse\\Java\\train\\src\\train\\tr.jpg");
+        JLabel lb1 = new JLabel(icon, JLabel.CENTER);
+        add(lb1);
+        setBackground(Color.LIGHT_GRAY);
+        setOpaque(true);
+    }
+}
+
+class MyFrame extends JFrame {
+    MyFrame() {
+        setTitle("기차 예약");
+        setSize(500, 700);
+        setResizable(false); // 창의 크기를 변경하지 못하게
+        setLocationRelativeTo(null); // 창이 가운데 나오게
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 종료 동작 설정
+        Container c = getContentPane();
+        c.add(new SouthPanel(this), BorderLayout.SOUTH);
+        c.add(new CenterPanel(), BorderLayout.CENTER);
+        c.add(new NorthPanel(), BorderLayout.NORTH);
+        setVisible(true);
+    }
+}
+
+
+class MyActionListener implements ActionListener {
+	private JFrame frame;
+
+    public MyActionListener(JFrame frame) {
+        this.frame = frame;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        frame.dispose(); // 프레임을 닫음
+        new Login();
+    }
+}
+
+
+public class MyApp {
+    public static void main(String[] args) {
+        new MyFrame();
+    }
+}
