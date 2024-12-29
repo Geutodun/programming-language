@@ -1,0 +1,71 @@
+package train;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+
+class Login extends JFrame {
+	static String id;
+	static String password;
+	
+	JTextField text_id, text_password;//클래스 변수로 선언
+
+	Login() {
+        setTitle("로그인");
+        setSize(300, 200);
+        setResizable(false); // 창의 크기를 변경하지 못하게
+        setLocationRelativeTo(null); // 창이 가운데 나오게
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 종료 동작 설정
+        
+        GridLayout grid = new GridLayout(3, 2);
+        grid.setVgap(10);
+        Container c = getContentPane();
+        c.setLayout(grid);
+        
+		c.add(new JLabel(" 아이디"));
+		text_id = new JTextField(20);
+		c.add(text_id);
+		
+		c.add(new JLabel(" 비밀번호"));
+		text_password = new JTextField(20);
+		c.add(text_password);
+		
+		JButton btn = new JButton("로그인");
+		c.add(btn);
+		btn.addActionListener(new Listener(this));
+		
+		JButton btn1 = new JButton("회원가입");
+		c.add(btn1);
+		
+        setVisible(true);
+    }
+	
+	class Listener implements ActionListener {
+		JFrame frame;
+		public Listener(JFrame f){
+			frame =f;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			//버튼을 누르면 이쪽으로 제어가 이동
+			id  = text_id.getText();
+			System.out.println(id);
+			password = text_password.getText();
+			System.out.println(password);
+			
+			/*여기서 로그인 관리 코드 나중에 추가*/
+			
+			
+			
+			frame.dispose(); // 프레임을 닫음
+			
+		}
+	}
+}
+
+
+public class loginpage {
+	
+}
